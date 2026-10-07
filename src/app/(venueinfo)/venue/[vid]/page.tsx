@@ -1,5 +1,6 @@
 import Image from "next/image";
 import getVenue from "@/libs/getVenue";
+import styles from "./venueDetail.module.css";
 
 type VenueDetailPageProps = {
   params: Promise<{ vid: string }>;
@@ -11,27 +12,48 @@ export default async function VenueDetailPage({ params }: VenueDetailPageProps) 
   const venue = venueJson.data;
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-6 py-12">
-      <div className="relative h-72 w-full overflow-hidden rounded-lg md:h-[28rem]">
-        <Image
-          src={venue.picture}
-          alt={venue.name}
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 1024px"
-          className="object-cover"
-        />
+    <main className={styles.page}>
+      <div className={styles.detail}>
+        <div className={styles.imageFrame}>
+          <Image
+            src={venue.picture}
+            alt={venue.name}
+            fill
+            priority
+            sizes="(max-width: 700px) 90vw, 340px"
+            className={styles.image}
+          />
+        </div>
+        <section className={styles.information}>
+          <h1>{venue.name}</h1>
+          <dl>
+            <div>
+              <dt>Name:</dt>
+              <dd>{venue.name}</dd>
+            </div>
+            <div>
+              <dt>Address:</dt>
+              <dd>{venue.address}</dd>
+            </div>
+            <div>
+              <dt>District:</dt>
+              <dd>{venue.district}</dd>
+            </div>
+            <div>
+              <dt>Postal Code:</dt>
+              <dd>{venue.postalcode}</dd>
+            </div>
+            <div>
+              <dt>Tel:</dt>
+              <dd>{venue.tel}</dd>
+            </div>
+            <div>
+              <dt>Daily Rate:</dt>
+              <dd>{venue.dailyrate}</dd>
+            </div>
+          </dl>
+        </section>
       </div>
-      <section className="mt-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <h1 className="text-3xl font-bold text-gray-900">{venue.name}</h1>
-        <p className="mt-4 text-gray-700">
-          {venue.address}, {venue.district}, {venue.province} {venue.postalcode}
-        </p>
-        <p className="mt-2 text-gray-700">Telephone: {venue.tel}</p>
-        <p className="mt-4 text-xl font-semibold text-gray-900">
-          Daily rate: ฿{venue.dailyrate.toLocaleString("en-US")}
-        </p>
-      </section>
     </main>
   );
 }

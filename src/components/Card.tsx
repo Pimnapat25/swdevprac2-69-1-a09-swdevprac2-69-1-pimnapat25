@@ -14,12 +14,12 @@ export default function Card({ venueName, imgSrc, onRatingChange }: CardProps) {
   const [rating, setRating] = useState<number | null>(0);
 
   return (
-    <div className="w-64 overflow-hidden rounded-lg border border-gray-200 shadow-sm">
+    <article className="h-80 w-64 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md">
       <div className="relative h-52 w-full overflow-hidden">
         <Image src={imgSrc} alt={venueName} fill className="object-cover" />
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-bold text-gray-900">{venueName}</h3>
+        <h3 className="text-base font-normal text-gray-900">{venueName}</h3>
         {onRatingChange ? (
           <div
             className="mt-1"
@@ -41,6 +41,6 @@ export default function Card({ venueName, imgSrc, onRatingChange }: CardProps) {
           </div>
         ) : null}
       </div>
-    </div>
+    </article>
   );
 }
