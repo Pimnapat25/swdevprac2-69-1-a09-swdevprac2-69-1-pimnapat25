@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Live website
+
+[View the deployed Venue Explorer on Vercel](https://swdevprac2-69-1-a09-swdevprac2-69-1-seven.vercel.app)
+
 ## Getting Started
 
 First, run the development server:
