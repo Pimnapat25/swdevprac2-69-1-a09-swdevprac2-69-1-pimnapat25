@@ -1,30 +1,29 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Geist } from "next/font/google";
-import SiteHeader from "@/components/SiteHeader";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import TopMenu from "@/components/TopMenu";
 
-const geist = Geist({
-  variable: "--font-sans",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const display = Cormorant_Garamond({
-  variable: "--font-display",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Gather | Distinctive Event Venues",
-  description: "Explore a curated collection of venues for memorable gatherings.",
+  title: "Venue Explorer",
+  description: "Find and book the perfect venue for every occasion.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geist.variable} ${display.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <SiteHeader />
-        {children}
+        <TopMenu />
+        <div className="pt-16">{children}</div>
       </body>
     </html>
   );

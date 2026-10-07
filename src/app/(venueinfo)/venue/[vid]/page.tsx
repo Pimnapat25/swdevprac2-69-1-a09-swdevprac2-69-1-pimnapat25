@@ -1,66 +1,37 @@
 import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
 import getVenue from "@/libs/getVenue";
-import styles from "./detail.module.css";
 
-export default async function VenueDetailPage({
-  params,
-}: {
+type VenueDetailPageProps = {
   params: Promise<{ vid: string }>;
-}) {
+};
+
+export default async function VenueDetailPage({ params }: VenueDetailPageProps) {
   const { vid } = await params;
-
-  let venueResponse;
-  try {
-    venueResponse = await getVenue(vid);
-  } catch {
-    notFound();
-  }
-
-  const venue = venueResponse.data;
+  const venueJson = await getVenue(vid);
+  const venue = venueJson.data;
 
   return (
-    <main className={styles.page}>
-      <Link href="/venue" className={styles.back}>
-        <span aria-hidden="true">←</span> All venues
-      </Link>
-      <div className={styles.layout}>
-        <div className={styles.imageFrame}>
-          <Image
-            src={venue.picture}
-            alt={`${venue.name} venue`}
-            fill
-            priority
-            sizes="(max-width: 800px) 100vw, 58vw"
-            className={styles.image}
-          />
-        </div>
-        <section className={styles.details}>
-          <p className={styles.kicker}>Private event venue</p>
-          <h1>{venue.name}</h1>
-          <p className={styles.address}>
-            {venue.address}
-            <br />
-            {venue.district}, {venue.province} {venue.postalcode}
-          </p>
-          <dl className={styles.facts}>
-            <div>
-              <dt>Daily rate</dt>
-              <dd>฿{venue.dailyrate.toLocaleString("en-US")}</dd>
-            </div>
-            <div>
-              <dt>Telephone</dt>
-              <dd>
-                <a href={`tel:${venue.tel}`}>{venue.tel}</a>
-              </dd>
-            </div>
-          </dl>
-          <a href={`tel:${venue.tel}`} className={styles.contact}>
-            Enquire about this venue <span aria-hidden="true">→</span>
-          </a>
-        </section>
+    <main className="mx-auto w-full max-w-5xl px-6 py-12">
+      <div className="relative h-72 w-full overflow-hidden rounded-lg md:h-[28rem]">
+        <Image
+          src={venue.picture}
+          alt={venue.name}
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 1024px"
+          className="object-cover"
+        />
       </div>
+      <section className="mt-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <h1 className="text-3xl font-bold text-gray-900">{venue.name}</h1>
+        <p className="mt-4 text-gray-700">
+          {venue.address}, {venue.district}, {venue.province} {venue.postalcode}
+        </p>
+        <p className="mt-2 text-gray-700">Telephone: {venue.tel}</p>
+        <p className="mt-4 text-xl font-semibold text-gray-900">
+          Daily rate: ฿{venue.dailyrate.toLocaleString("en-US")}
+        </p>
+      </section>
     </main>
   );
 }

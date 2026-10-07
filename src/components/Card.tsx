@@ -1,64 +1,46 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import styles from "./Card.module.css";
+import Rating from "@mui/material/Rating";
 
-interface CardProps {
+type CardProps = {
   venueName: string;
   imgSrc: string;
-  location?: string;
-  rate?: number;
-  rating?: number;
-  onRatingChange?: (rating: number) => void;
-}
+  onRatingChange?: (venueName: string, rating: number) => void;
+};
 
-export default function Card({
-  venueName,
-  imgSrc,
-  location,
-  rate,
-  rating,
-  onRatingChange,
-}: CardProps) {
-  const showRating = rating !== undefined && onRatingChange !== undefined;
+export default function Card({ venueName, imgSrc, onRatingChange }: CardProps) {
+  const [rating, setRating] = useState<number | null>(0);
 
   return (
-    <article className={styles.card}>
-      <div className={styles.imageFrame}>
-        <Image
-          src={imgSrc}
-          alt={`${venueName} venue`}
-          fill
-          sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
-          className={styles.image}
-        />
-        {rate !== undefined ? (
-          <span className={styles.rate}>฿{rate.toLocaleString("en-US")} / day</span>
-        ) : null}
+    <div className="w-64 overflow-hidden rounded-lg border border-gray-200 shadow-sm">
+      <div className="relative h-52 w-full overflow-hidden">
+        <Image src={imgSrc} alt={venueName} fill className="object-cover" />
       </div>
-      <div className={styles.content}>
-        <p className={styles.eyebrow}>Event venue</p>
-        <h2>{venueName}</h2>
-        {location ? <p className={styles.location}>{location}</p> : null}
-        {showRating ? (
-          <div className={styles.rating} aria-label={`Rating: ${rating} out of 5`}>
-            {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={value}
-                type="button"
-                aria-label={`Rate ${value} stars`}
-                onClick={() => onRatingChange(value)}
-                className={value <= rating ? styles.activeStar : styles.star}
-              >
-                ★
-              </button>
-            ))}
+      <div className="p-4">
+        <h3 className="text-lg font-bold text-gray-900">{venueName}</h3>
+        {onRatingChange ? (
+          <div
+            className="mt-1"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <Rating
+              id={venueName}
+              name={venueName}
+              data-testid={`${venueName} Rating`}
+              value={rating}
+              onChange={(_, newValue) => {
+                setRating(newValue);
+                onRatingChange(venueName, newValue ?? 0);
+              }}
+            />
           </div>
         ) : null}
-        <span className={styles.explore} aria-hidden="true">
-          View venue <span>↗</span>
-        </span>
       </div>
-    </article>
+    </div>
   );
 }
