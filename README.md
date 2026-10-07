@@ -1,6 +1,6 @@
 ## Live website
 
-[[View the deployed Venue Explorer on Vercel](https://swdevprac2-69-1-a09-swdevprac2-69-1-pimnapat25-anvc44ri1.vercel.app)](https://swdevprac2-69-1-a09-swdevprac2-69-1-seven.vercel.app/)
+https://swdevprac2-69-1-a09-swdevprac2-69-1-seven.vercel.app/
 
 ## Getting Started
 
